@@ -14,26 +14,27 @@ from dkey import deprecate_keys
 def customer_info():
   # old version
   # return {
-  #    'name': 'Smith', 
-  #    'age': 24, 
+  #    'name': 'Smith',
+  #    'age': 24,
   #    'cleartext password
   # }
-  # new version, no duplication of entries
+  # new version, 'name' does not have to appear anymore in the dict
   return deprecate_keys(
     {
-        'first name': 'Adam', 
-        'last name': 'Smith', 
+        'first name': 'Adam',
+        'last name': 'Smith',
         'age': 24
-    }, 
-    [('name', 'last name'), ('cleartext password',)])
+    },
+    dkey('name', 'last name'),
+    dkey('cleartext password',))
 
 def my_func():
     customer = customer_info()
-    
+
     # Worked with the old version, will warn to use 'last name' in the future
     # and will return 'last name' which is the replacement for 'name'
     print(customer['name'])
-    
+
     # Worked with the old version, will warn that in future release
     # 'cleartext password' will no longer be available
     print(customer['cleartext password'])
