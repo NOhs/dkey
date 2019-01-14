@@ -55,7 +55,7 @@ Several things are done here:
 To give more specialised warning messages or to indicate since when this function is deprecated, etc. please
 have a look at the documentation website which explains all available options:
 
-TODO: [Documentation](https://TODO)
+[Documentation](https://dkey.readthedocs.io/)
 
 ## Limitations
 
