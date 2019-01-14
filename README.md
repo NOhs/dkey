@@ -1,8 +1,10 @@
 # dkey - deprecating dict keys
 
-This module provides a thin wrapper that can be used to set certain keys in dictionaries as deprecated.
-If you have e.g. a function that returns a dict, you can wrap it to declare certain keys as deprecated, which is not
-possible with the default `dict` implementation.
+[![Build Status](https://travis-ci.org/NOhs/dkey.svg?branch=master)](https://travis-ci.org/NOhs/dkey) [![Coverage Status](https://coveralls.io/repos/github/NOhs/dkey/badge.svg?branch=master)](https://coveralls.io/github/NOhs/dkey?branch=master) [![Documentation Status](https://readthedocs.org/projects/dkey/badge/?version=latest)](https://dkey.readthedocs.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/dkey.svg)](https://badge.fury.io/py/dkey) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/24cc8c86e18b44d2b3cb14270bca97bb)](https://www.codacy.com/app/NOhs/dkey?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=NOhs/dkey&amp;utm_campaign=Badge_Grade)
+
+This module provides a thin wrapper that can be used to set certain keys in dictionaries as deprecated. This allows
+e.g. for an easy way to gently push out interface changes instead of just introducing breaking changes without any
+prior warnings.
 
 ## Usage example
 
