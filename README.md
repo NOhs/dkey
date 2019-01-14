@@ -16,7 +16,7 @@ def customer_info():
   # return {
   #    'name': 'Smith',
   #    'age': 24,
-  #    'cleartext password
+  #    'cleartext password': 'password'
   # }
   # new version, 'name' does not have to appear anymore in the dict
   return deprecate_keys(
@@ -59,4 +59,6 @@ TODO: [Documentation](https://TODO)
 
 ## Limitations
 
-No deprecation warnings can be generated to indicate that the number of entries of the dict has change.
+- No deprecation warnings can be generated to indicate that the number of entries of the dict has change.
+- No automatic docstring changes are possible at the moment
+
