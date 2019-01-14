@@ -28,6 +28,29 @@ class deprecate_keys(dict):
             self._key_mappings[mapping['old key']] = mapping
 
     def __getitem__(self, key):
+        key = self._check_deprecated(key)
+        return super().__getitem__(key)
+
+    def __setitem__(self, key, value):
+        key = self._check_deprecated(key)
+        return super().__setitem__(key, value)
+
+    def _check_deprecated(self, key):
+        '''Checks if the given key is in the dict of deprecated keys. If it is
+        it warns and returns the appropriate new key. Which is in case of a
+        removal the old key, and in case of a replacement the new key.
+
+        Parameters
+        ----------
+        key
+            The key to look up in the dict of deprecated keys
+
+        Returns
+        -------
+        key
+            The old key, if the key will be removed at some point. The new
+            key if the key has a replacement.
+        '''
         try:
             mapping = self._key_mappings[key]
             _warn(mapping['warning message'], mapping['warning type'])
@@ -35,7 +58,7 @@ class deprecate_keys(dict):
         except KeyError:
             pass
 
-        return super().__getitem__(key)
+        return key
 
 
 def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type='developer'):
