@@ -44,7 +44,7 @@ key to deprecate_keys we use the convenience function any:`dkey`. Now if we call
     def my_func():
         customer = customer_info()
         print(customer['cleartext password'])
-        # Wil raise a DeprecationWarning: Key `cleartext password` is deprecated. Please do no longer use it.
+        # Wil raise a DeprecationWarning: Key `cleartext password` is deprecated. It shouldn't be used anymore.
 
 As you can see an automatically generated deprecation warning is raised.
 
@@ -70,7 +70,7 @@ key and the new key people should be using. The result is::
     def my_func():
         customer = customer_info()
         print(customer['name'])
-        # Wil raise a DeprecationWarning: Key `name` is deprecated. Please use `first name` from now on.
+        # Wil raise a DeprecationWarning: Key `name` is deprecated. Use `first name` from now on.
 
 And again an automatically generated deprecation warning is raised that also informs the developers
 about which key to use instead.
@@ -115,7 +115,7 @@ Which results in::
     def my_func():
         customer = customer_info()
         print(customer['cleartext password'])
-        # Wil raise a FutureWarning: Key `cleartext password` is deprecated. Please do no longer use it.
+        # Wil raise a FutureWarning: Key `cleartext password` is deprecated. It shouldn't be used anymore.
 
 :any:`FutureWarning` is a warning type that is shown to end users by default. If you want to raise
 your own warning type, this is also possible. Just hand your warning type to `warning_type` instead of

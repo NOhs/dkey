@@ -103,9 +103,9 @@ def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type=
         message += f' It will be removed in version {removed_in}.'
     if details is None:
         if replace:
-            details = f' Please use `{new_key}` from now on.'
+            details = f'Use `{new_key}` from now on.'
         else:
-            details = ' Please do no longer use it.'
+            details = 'It shouldn\'t be used anymore.'
 
     message += ' ' + details
 
