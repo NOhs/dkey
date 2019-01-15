@@ -44,15 +44,15 @@ def my_func():
 
 Several things are done here:
 
--  To ensure nothing breaks, access to the new dict with the old key still works
+-   To ensure nothing breaks, access to the new dict with the old key still works
 
--  For key replacements, old keys are simply mapped to the new object (no duplication is created)
+-   For key replacements, old keys are simply mapped to the new object (no duplication is created)
   
--  For key removals, old keys will raise a warning but are still in the dict
+-   For key removals, old keys will raise a warning but are still in the dict
 
--  To ensure developers are made aware of the deprecation a `DeprecationWarning` is
-   raised which automatically tells which old key to replace with what, or which
-   key is no longer available.
+-   To ensure developers are made aware of the deprecation a `DeprecationWarning` is
+    raised which automatically tells which old key to replace with what, or which
+    key is no longer available.
 
 ## Customisation and configuration
 
