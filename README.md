@@ -65,6 +65,5 @@ have a look at the documentation website which explains all available options:
 ## Limitations
 
 - No deprecation warnings can be generated to indicate that the number of entries of the dict has change.
-
 - No automatic docstring changes are possible at the moment
 
