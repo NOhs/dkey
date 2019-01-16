@@ -95,8 +95,8 @@ the changes than what the default message offers. You can pass those details to 
 
 Which will result in the warning: 
 
-> Key `name` is deprecated since version 1.1.12. It will be removed in version 2.0.0.
-  `name` has been replaced by the two fields `first name` and `last name`.
+    Key `name` is deprecated since version 1.1.12. It will be removed in version 2.0.0.
+    `name` has been replaced by the two fields `first name` and `last name`.
 
 By default, a :any:`DeprecationWarning` is used. This warning does not appear for end users. If you have
 deprecation warnings that are actually meant for end users and not just for developers, you can change
