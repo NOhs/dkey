@@ -1,7 +1,7 @@
 '''
 This module provides a thin wrapper that can be used to set certain keys in dictionaries as deprecated.
-If you have e.g. a function that returns a dict, you can wrap it to declare certain keys as deprecated, which is not
-possible with the default `dict` implementation.
+This allows e.g. for an easy way to gently push out interface changes instead of just introducing breaking 
+changes without any prior warnings.
 
 Usage example
 -------------
@@ -24,7 +24,7 @@ And the following code that uses our function::
         customer = customer_info()
         print(customer['cleartext password'])
 
-Now we want to remove the `cleartext password` from  our returned dict due to security concerns.
+Now we want to remove the `'cleartext password'` from  our returned dict due to security concerns.
 However, we want to give others time to adapt to our changes, so instead of just removing it,
 we deprecate the usage of that dict entry::
 
@@ -38,15 +38,15 @@ we deprecate the usage of that dict entry::
             },
             dkey('cleartext password'))
 
-We use the function any:`deprecate_keys` to deprecate the key `'cleartext password'`. To pass the
-key to deprecate_keys we use the convenience function any:`dkey`. Now if we call `my_func` again::
+We use the function :any:`deprecate_keys` to deprecate the key `'cleartext password'`. To pass the
+key to :any:`deprecate_keys` we use the convenience function :any:`dkey`. Now if we call `my_func` again::
 
     def my_func():
         customer = customer_info()
         print(customer['cleartext password'])
-        # Wil raise a DeprecationWarning: Key `cleartext password` is deprecated. It shouldn't be used anymore.
+        # Wil warn with a DeprecationWarning: Key `cleartext password` is deprecated. It shouldn't be used anymore.
 
-As you can see an automatically generated deprecation warning is raised.
+As you can see an automatically generated deprecation warning is used.
 
 Replacing a key
 ...............
@@ -72,15 +72,15 @@ key and the new key people should be using. The result is::
         print(customer['name'])
         # Wil raise a DeprecationWarning: Key `name` is deprecated. Use `first name` from now on.
 
-And again an automatically generated deprecation warning is raised that also informs the developers
+And again an automatically generated deprecation warning is used that also informs the developers
 about which key to use instead.
 
 More configuration options
 ..........................
 
 If you have a well organised code project, you will normally also want to communicate since when a feature is
-deprecated and when it will get completely removed. Maybe you also want to give more detailed information about
-the changes than the default messages. You can pass those details to :any:`dkey.deky`::
+deprecated and when it will get removed completely. Maybe you also want to give more detailed information about
+the changes than what the default message offers. You can pass those details to :any:`dkey.dkey`::
 
     from dkey import deprecate_keys, dkey
 
@@ -93,8 +93,10 @@ the changes than the default messages. You can pass those details to :any:`dkey.
             dkey('name', 'last name', deprecated_in='1.1.12', removed_in='2.0.0',
                 details='`name` has been replaced by the two fields `first name` and `last name`.'))
 
-Which will result in the warning: Key `name` is deprecated since version 1.1.12. It will be removed in version 2.0.0.
-`name` has been replaced by the two fields `first name` and `last name`.
+Which will result in the warning: 
+
+    Key `name` is deprecated since version 1.1.12. It will be removed in version 2.0.0.
+    `name` has been replaced by the two fields `first name` and `last name`.
 
 By default, a :any:`DeprecationWarning` is used. This warning does not appear for end users. If you have
 deprecation warnings that are actually meant for end users and not just for developers, you can change
@@ -117,7 +119,7 @@ Which results in::
         print(customer['cleartext password'])
         # Wil raise a FutureWarning: Key `cleartext password` is deprecated. It shouldn't be used anymore.
 
-:any:`FutureWarning` is a warning type that is shown to end users by default. If you want to raise
+:any:`FutureWarning` is a warning type that is shown to end users by default. If you want to show
 your own warning type, this is also possible. Just hand your warning type to `warning_type` instead of
 the string `'end user'` and it will be used to spawn the warning.
 
@@ -131,7 +133,7 @@ Limitations
 -----------
 
 - Currently, only key access can be checked and deprecation warnings are shown. There are no warnings
-for changes in the number of entries in the dict.
+  for changes in the number of entries in the dict.
 
 - Furthermore, no automatic doc-string adaptations are possible as of now
 '''
