@@ -4,20 +4,20 @@ _warning_types = {'developer': DeprecationWarning, 'end user': FutureWarning}
 
 class deprecate_keys(dict):
     '''
-    Wrapper for dicts that allow to set certain keys as deprecated.
+    Wrapper for dicts that allows to set certain keys as deprecated.
 
     Attributes
     ----------
     dictionary: dict
         The dictionary to wrap
     *args
-        Zero or more keys that should raise deprecation warnings.
+        Zero or more keys that should show deprecation warnings.
         Use :any:`dkey.dkey` for each key.
 
     Warns
     -----
     ArbitraryWarning
-        If a deprecated key is used, raises a warning
+        If a deprecated key is used, shows a warning
         that was set for this key. (see also :any:`dkey.dkey`)
     '''
 
@@ -64,8 +64,8 @@ class deprecate_keys(dict):
 def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type='developer'):
     '''Function that converts a key into a deprecation lookup dict.
 
-    To use the :any:`dkey.deprecate_keys` functions it is easiest to generate
-    the input with this function. This function generates:
+    To use the :any:`dkey.deprecate_keys` function it is easiest to generate
+    its input with this function. This function generates:
 
     - A key removed deprecation warning object if one key is provided
     - A key replaced deprecation warning object if two keys are provided
@@ -85,11 +85,13 @@ def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type=
     details : str, optional
         Will remove the default final sentence (do no longer use, or use `xxx` from now on).
     warning_type : {'developer', 'end user', ArbitraryWarning}, optional
+        The warning type to use when the old key is accessed
+        
         By default, deprecation warnings are intended for developers only which
-        means a any:`DeprecationWarning` is used which isn't shown to end users
-        in default setups. If it should be shown to end users, this can be done
-        by passing 'end user' which will raise :any:`FutureWarning`. If you want
-        to use your custom warning type this is also possible.
+        means a any:`DeprecationWarning` is used which isn't shown to end users.
+        If it should be shown to end users, this can be done by passing 'end user'
+        which will raise :any:`FutureWarning`. If you want to use your custom warning
+        type this is also possible.
 
         .. note:: Your custom warning must work with :any:`warnings.warn`
 
