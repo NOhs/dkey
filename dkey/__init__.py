@@ -3,6 +3,13 @@ This module provides a thin wrapper that can be used to set certain keys in dict
 This allows e.g. for an easy way to gently push out interface changes instead of just introducing breaking 
 changes without any prior warnings.
 
+Installation
+------------
+To install this package simply use pip.
+
+    pip install dkey
+
+
 Usage example
 -------------
 
