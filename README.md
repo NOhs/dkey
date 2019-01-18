@@ -19,7 +19,7 @@ pip install dkey
 ### Replacing or removing keys
 
 ```python
-from dkey import deprecate_keys
+from dkey import deprecate_keys, dkey
 
 def customer_info():
   # old version
