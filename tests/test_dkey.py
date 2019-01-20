@@ -45,9 +45,25 @@ def test_setitem():
         eq_(w[0].category, DeprecationWarning)
         eq_(str(w[0].message), 'Key `a` is deprecated. It shouldn\'t be used anymore.')
         eq_(100, my_dict['a'])
-        eq_(len(w), 2)
-        eq_(w[-1].category, DeprecationWarning)
-        eq_(str(w[-1].message), 'Key `a` is deprecated. It shouldn\'t be used anymore.')
+        eq_(len(w), 1)
+        my_dict['a'] = 120
+        eq_(len(w), 1)
+        eq_(120, my_dict['a'])
+        eq_(len(w), 1)
+
+    my_dict = deprecate_keys({'b': 12}, dkey('a', 'b'))
+    with warnings.catch_warnings(record=True) as w:
+        my_dict['a'] = 100
+        eq_(len(w), 1)
+        eq_(w[0].category, DeprecationWarning)
+        eq_(str(w[0].message), 'Key `a` is deprecated. Use `b` from now on.')
+        eq_(100, my_dict['a'])
+        eq_(len(w), 1)
+        my_dict['a'] = 120
+        eq_(len(w), 1)
+        eq_(120, my_dict['a'])
+        eq_(len(w), 1)
+        eq_(my_dict['b'], 12)
 
 @with_setup(setup_check_all_warnings)
 def test_custom_warning():
