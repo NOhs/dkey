@@ -85,7 +85,7 @@ class deprecate_keys(dict):
 
     def __ne__(self, other):
         """
-        Return `True` if identical to `other`.
+        Return `True` if not identical to `other`.
 
         Warns if either this or `other` contains deprecated keys.
 
@@ -97,7 +97,7 @@ class deprecate_keys(dict):
         Returns
         -------
         bool
-            True if they are equal, False otherwise
+            True if they are not equal, False otherwise
 
         Warns
         -----
