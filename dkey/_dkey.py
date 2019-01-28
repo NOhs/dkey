@@ -28,11 +28,17 @@ class deprecate_keys(dict):
             self._key_mappings[mapping['old key']] = mapping
 
     def __getitem__(self, key):
-        key = self._check_deprecated(key)
+        key, _ = self._check_deprecated(key)
         return super().__getitem__(key)
 
     def __setitem__(self, key, value):
-        key = self._check_deprecated(key)
+        _, deprecated = self._check_deprecated(key)
+
+        # Warn only once. Now a new value is stored that
+        # is unrelated to the old deprecated value.
+        if deprecated:
+            del self._key_mappings[key]
+
         return super().__setitem__(key, value)
 
     def _check_deprecated(self, key):
@@ -51,14 +57,16 @@ class deprecate_keys(dict):
             The old key, if the key will be removed at some point. The new
             key if the key has a replacement.
         '''
+        deprecated = False
         try:
             mapping = self._key_mappings[key]
             _warn(mapping['warning message'], mapping['warning type'])
             key = mapping['new key']
+            deprecated = True
         except KeyError:
             pass
 
-        return key
+        return key, deprecated
 
 
 def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type='developer'):
@@ -86,7 +94,7 @@ def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type=
         Will remove the default final sentence (do no longer use, or use `xxx` from now on).
     warning_type : {'developer', 'end user', ArbitraryWarning}, optional
         The warning type to use when the old key is accessed
-        
+
         By default, deprecation warnings are intended for developers only which
         means a any:`DeprecationWarning` is used which isn't shown to end users.
         If it should be shown to end users, this can be done by passing 'end user'
