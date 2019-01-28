@@ -192,11 +192,17 @@ class deprecate_keys_test_case(unittest.TestCase):
             self.assertTrue(self.deprecated_dict == self.regular_dict)
 
         with self.assertWarns(DeprecationWarning):
+            self.assertTrue(self.deprecated_dict == self.deprecated_dict)
+
+        with self.assertWarns(DeprecationWarning):
             self.assertTrue(self.regular_dict == self.deprecated_dict)
 
     def test_inequality(self):
         with self.assertWarns(DeprecationWarning):
             self.assertFalse(self.deprecated_dict != self.regular_dict)
+
+        with self.assertWarns(DeprecationWarning):
+            self.assertFalse(self.deprecated_dict != self.deprecated_dict)
 
         with self.assertWarns(DeprecationWarning):
             self.assertFalse(self.regular_dict != self.deprecated_dict)
