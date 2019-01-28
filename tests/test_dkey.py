@@ -38,7 +38,7 @@ class deprecate_keys_test_case(unittest.TestCase):
         dkeys = [dkey(self.example_case['removed key']), dkey(*self.example_case['replaced key'])]
         self.deprecated_dict = deprecate_keys(dict(items_for_dkey), *dkeys)
 
-    def refill_dict(self):
+    def _refill_dict(self):
         for key, val in self.example_case['items']:
             self.deprecated_dict[key] = val
 
@@ -61,10 +61,11 @@ class deprecate_keys_test_case(unittest.TestCase):
             with assertion(DeprecationWarning):
                 val = self.deprecated_dict.pop(key)
             self.assertEqual(self.regular_dict.pop(key), val)
-            self.assertEqual(len(self.regular_dict), len(self.deprecated_dict))
+
+        self.assertEqual(len(self.regular_dict), len(self.deprecated_dict))
 
         with self.assertNotWarns(DeprecationWarning):
-            self.refill_dict()
+            self._refill_dict()
 
         with self.assertRaises(KeyError):
             self.deprecated_dict.pop(self.example_case['no key'])
@@ -74,10 +75,11 @@ class deprecate_keys_test_case(unittest.TestCase):
             with assertion(DeprecationWarning):
                 val = self.deprecated_dict.pop(key, self.example_case['default value'])
             self.assertEqual(self.regular_dict.pop(key, self.example_case['default value']), val)
-            self.assertEqual(len(self.regular_dict), len(self.deprecated_dict))
+
+        self.assertEqual(len(self.regular_dict), len(self.deprecated_dict))
 
         with self.assertNotWarns(DeprecationWarning):
-            self.refill_dict()
+            self._refill_dict()
 
         with self.assertNotWarns(DeprecationWarning):
             self.assertEqual(self.deprecated_dict.pop(self.example_case['no key'], self.example_case['default value']), self.regular_dict.pop(self.example_case['no key'], self.example_case['default value']))
@@ -95,12 +97,12 @@ class deprecate_keys_test_case(unittest.TestCase):
                     num_deprecations = num_deprecations + 1
 
         with self.assertNotWarns(DeprecationWarning):
-                self.refill_dict()
+                self._refill_dict()
 
     def test_clear(self):
         with self.assertNotWarns(DeprecationWarning):
             self.deprecated_dict.clear()
-            self.refill_dict()
+            self._refill_dict()
 
     def test_del(self):
         for key, assertion in self.get_key_assertions():
@@ -110,7 +112,7 @@ class deprecate_keys_test_case(unittest.TestCase):
                 del self.deprecated_dict[key]
 
         with self.assertNotWarns(DeprecationWarning):
-            self.refill_dict()
+            self._refill_dict()
 
     def _test_in(self, dictionary):
         for key, assertion in self.get_key_assertions():
