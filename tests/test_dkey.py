@@ -175,6 +175,32 @@ class deprecate_keys_test_case(unittest.TestCase):
             with self.assertNotWarns(DeprecationWarning):
                 self.deprecated_dict[key] = self.example_case['default value']
 
+    def test_items(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertEqual(self.deprecated_dict.items(), self.regular_dict.items())
+
+    def test_values(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertEqual(set(self.deprecated_dict.values()), set(self.regular_dict.values()))
+
+    def test_keys(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertEqual(self.deprecated_dict.keys(), self.regular_dict.keys())
+
+    def test_equality(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertTrue(self.deprecated_dict == self.regular_dict)
+
+        with self.assertWarns(DeprecationWarning):
+            self.assertTrue(self.regular_dict == self.deprecated_dict)
+
+    def test_inequality(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertFalse(self.deprecated_dict != self.regular_dict)
+
+        with self.assertWarns(DeprecationWarning):
+            self.assertFalse(self.regular_dict != self.deprecated_dict)
+
     def test_custom_warning_type(self):
         my_dict = deprecate_keys({'a': 12}, dkey('a', warning_type=UserWarning))
         with self.assertWarns(UserWarning):

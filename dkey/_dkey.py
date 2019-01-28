@@ -49,6 +49,74 @@ class deprecate_keys(dict):
 
             super().__setitem__(key, value)
 
+    def __eq__(self, other):
+        """
+        Return `True` if identical to `other`.
+
+        Warns if either this or `other` contains deprecated keys.
+
+        Parameters
+        ----------
+        other
+            The other object to compare this one to
+
+        Returns
+        -------
+        bool
+            True if they are equal, False otherwise
+
+        Warns
+        -----
+        CustomWarning
+            Warns with the warnings stored for all contained keys.
+
+        """
+        for mapping in self._key_mappings.values():
+            deprecate_keys._warn_deprecation(mapping)
+
+        try:
+            for mapping in other._key_mappings.values():
+                deprecate_keys._warn_deprecation(mapping)
+        except AttributeError:
+            pass
+
+        return super().__eq__(other)
+
+
+    def __ne__(self, other):
+        """
+        Return `True` if identical to `other`.
+
+        Warns if either this or `other` contains deprecated keys.
+
+        Parameters
+        ----------
+        other
+            The other object to compare this one to
+
+        Returns
+        -------
+        bool
+            True if they are equal, False otherwise
+
+        Warns
+        -----
+        CustomWarning
+            Warns with the warnings stored for all contained keys.
+
+        """
+        for mapping in self._key_mappings.values():
+            deprecate_keys._warn_deprecation(mapping)
+
+        try:
+            for mapping in other._key_mappings.values():
+                deprecate_keys._warn_deprecation(mapping)
+        except AttributeError:
+            pass
+
+        return super().__ne__(other)
+
+
     def __getitem__(self, key):
         """
         Get the value of the item of the given key `key`.
@@ -332,7 +400,7 @@ class deprecate_keys(dict):
             Warns for each deprecated item in the dictionary before returning.
 
         """
-        for mapping in self._key_mappings:
+        for mapping in self._key_mappings.values():
             self._warn_deprecation(mapping)
 
         return super().items()
@@ -381,7 +449,7 @@ class deprecate_keys(dict):
             Warns for each deprecated item in the dictionary before returning.
 
         """
-        for mapping in self._key_mappings:
+        for mapping in self._key_mappings.values():
             self._warn_deprecation(mapping)
 
         return super().keys()
@@ -435,7 +503,8 @@ class deprecate_keys(dict):
         except KeyError:
             return False
 
-    def _warn_deprecation(self, mapping):
+    @staticmethod
+    def _warn_deprecation(mapping):
         """
         Warn with the given deprecated key mapping.
 
