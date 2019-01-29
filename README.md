@@ -54,10 +54,6 @@ Several things are done here:
 
 -   To ensure nothing breaks, access to the new dict with the old key still works
 
--   For key replacements, old keys are simply mapped to the new object (no duplication is created)
-
--   For key removals, old keys will raise a warning but are still in the dict
-
 -   To ensure developers are made aware of the deprecation a `DeprecationWarning` is
     raised which automatically tells which old key to replace with what, or which
     key is no longer available.
@@ -71,5 +67,4 @@ have a look at the documentation website which explains all available options:
 
 ## Limitations
 
--   No deprecation warnings can be generated to indicate that the number of entries of the dict has change.
 -   No automatic docstring changes are possible at the moment

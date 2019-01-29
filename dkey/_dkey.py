@@ -13,6 +13,10 @@ class deprecate_keys(dict):
         """
         Construct the wrapper class.
 
+        Internally, the items are stored in the same order as the given dictionary (CPython >=3.6).
+        The deprecated old keys that were replaced with new ones are positioned
+        just before their respective new keys.
+
         Parameters
         ----------
         dictionary: dict
@@ -20,12 +24,6 @@ class deprecate_keys(dict):
         *args
             Zero or more keys that should show deprecation warnings.
             Use :any:`dkey.dkey` for each key.
-
-        Warns
-        -----
-        ArbitraryWarning
-            If a deprecated key is used, shows a warning
-            that was set for this key. (see also :any:`dkey.dkey`)
 
         """
         super().__init__()
