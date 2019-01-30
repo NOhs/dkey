@@ -1,3 +1,5 @@
+"""Test module testing all features of dkey."""
+
 import warnings
 import unittest
 from contextlib import contextmanager
@@ -158,14 +160,14 @@ class deprecate_keys_test_case(unittest.TestCase):
 
     def test_replacing(self):
         with self.assertWarnsRegex(DeprecationWarning, f'Key `{self.example_case["replaced key"][0]}` is deprecated. Use `{self.example_case["replaced key"][1]}` from now on.'):
-            self.deprecated_dict[self.example_case['replaced key'][0]]
+            self.assertEqual(self.deprecated_dict[self.example_case['replaced key'][0]], self.regular_dict[self.example_case['replaced key'][0]])
 
         with self.assertNotWarns(DeprecationWarning):
-            self.deprecated_dict[self.example_case['replaced key'][1]]
+            self.assertEqual(self.deprecated_dict[self.example_case['replaced key'][1]], self.regular_dict[self.example_case['replaced key'][1]])
 
     def test_removing(self):
         with self.assertWarnsRegex(DeprecationWarning, f'Key `{self.example_case["removed key"][0]}` is deprecated. It shouldn\'t be used anymore.'):
-            self.deprecated_dict[self.example_case['removed key']]
+            self.assertEqual(self.deprecated_dict[self.example_case['removed key']], self.regular_dict[self.example_case['removed key']])
 
     def test_setitem(self):
         for key, assertion in self.get_key_assertions():
@@ -210,32 +212,32 @@ class deprecate_keys_test_case(unittest.TestCase):
     def test_custom_warning_type(self):
         my_dict = deprecate_keys({'a': 12}, dkey('a', warning_type=UserWarning))
         with self.assertWarns(UserWarning):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
 
     def test_end_user_warning(self):
         my_dict = deprecate_keys({'a': 12}, dkey('a', warning_type='end user'))
         with self.assertWarns(FutureWarning):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
 
     def test_developer_warning(self):
         my_dict = deprecate_keys({'a': 12}, dkey('a', warning_type='developer'))
         with self.assertWarns(DeprecationWarning):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
 
     def test_deprecated_in(self):
         version = '1.81.1'
         my_dict = deprecate_keys({'a': 12}, dkey('a', deprecated_in=version))
         with self.assertWarnsRegex(DeprecationWarning, f'Key `a` is deprecated since version {version}. It shouldn\'t be used anymore.'):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
 
     def test_removed_in(self):
         version = '2.0'
         my_dict = deprecate_keys({'a': 12}, dkey('a', removed_in=version))
         with self.assertWarnsRegex(DeprecationWarning, f'Key `a` is deprecated. It will be removed in version {version}. It shouldn\'t be used anymore.'):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
 
     def test_added_details(self):
         details = 'Get rid of it!'
         my_dict = deprecate_keys({'a': 12}, dkey('a', details=details))
         with self.assertWarnsRegex(DeprecationWarning, details):
-            my_dict['a']
+            self.assertEqual(my_dict['a'], 12)
