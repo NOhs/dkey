@@ -42,7 +42,8 @@ def my_func():
     customer = customer_info()
 
     # Worked with the old version, will warn to use 'last name' in the future
-    # and will return 'last name' which is the replacement for 'name'
+    # and will return the value set for 'last name' which is the replacement
+    # for 'name'
     print(customer['name'])
 
     # Worked with the old version, will warn that in future release
