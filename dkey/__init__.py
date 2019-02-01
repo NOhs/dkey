@@ -1,6 +1,6 @@
 '''
 This module provides a thin wrapper that can be used to set certain keys in dictionaries as deprecated.
-This allows e.g. for an easy way to gently push out interface changes instead of just introducing breaking 
+This allows e.g. for an easy way to gently push out interface changes instead of just introducing breaking
 changes without any prior warnings.
 
 Installation
@@ -100,7 +100,7 @@ the changes than what the default message offers. You can pass those details to 
             dkey('name', 'last name', deprecated_in='1.1.12', removed_in='2.0.0',
                 details='`name` has been replaced by the two fields `first name` and `last name`.'))
 
-Which will result in the warning: 
+Which will result in the warning:
 
     Key `name` is deprecated since version 1.1.12. It will be removed in version 2.0.0.
     `name` has been replaced by the two fields `first name` and `last name`.
@@ -136,13 +136,31 @@ the string `'end user'` and it will be used to spawn the warning.
     function.
 
 
+Other dict functions
+--------------------
+
+Functions other than the item access via `[key]` will also warn appropriately. E.g., if you iterate over
+the dict::
+
+    for key in customer_info():
+        print(key)
+
+a warning is generated each time a deprecated key appears in the loop. Also if you try to delete a deprecated key,
+a warning will be generated::
+
+    customer = customer_info()
+    del customer['cleartext password']
+
+Similarly, the other functions of dict are wrapped.
+
+.. note:: Due to :any:`dict.items`, :any:`dict.keys`, and :any:`dict.values` returning view objects,
+          warnings are only generated when calling these functions, not when iterating over the respective
+          deprecated items.
+
 Limitations
 -----------
 
-- Currently, only key access can be checked and deprecation warnings are shown. There are no warnings
-  for changes in the number of entries in the dict.
-
-- Furthermore, no automatic doc-string adaptations are possible as of now
+- No automatic doc-string adaptations are possible as of now
 '''
 
 from ._dkey import deprecate_keys as deprecate_keys
