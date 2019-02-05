@@ -1,19 +1,17 @@
-dkey package documentation
-==========================
+.. include:: ../README.rst
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 4
+   :caption: Introduction
+   :hidden:
 
-.. automodule:: dkey
+   basics
+   configuration
 
-Module documentation
---------------------
+.. toctree::
+   :maxdepth: 4
+   :caption: Module
+   :hidden:
 
-.. autoclass:: dkey.deprecate_keys
-    :members:
-
-    .. automethod:: __init__
-
-.. autofunction:: dkey.dkey
+   module_documentation
 
