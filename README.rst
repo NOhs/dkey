@@ -48,4 +48,4 @@ Usage example
 Let's say we have a dict with an old key that we want to replace with a new one.
 
 
-.. image:: https://github.com/NOhs/dkey/blob/master/img/usage.gif
+.. image:: https://raw.githubusercontent.com/nohs/dkey/master/img/usage.gif
