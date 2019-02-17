@@ -164,6 +164,6 @@ will be used to spawn the warning::
 
 
 Limitations
------------
+===========
 
 - No automatic doc-string adaptations are possible as of now
