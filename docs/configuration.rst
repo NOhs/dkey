@@ -13,7 +13,7 @@ Removing a key
 
 To deprecate a key and warn that it will be removed in the future, you wrap
 your dict using :any:`dkey.deprecate_keys` and pass it the deprecated key
-using `dkey.dkey`::
+using :any:`dkey.dkey`::
 
     from dkey import deprecate_keys, dkey
 
@@ -71,10 +71,10 @@ More configuration options
 ==========================
 
 In case the default way warnings are generated are not what you need, :any:`dkey` offers
-several ways to customise the way, deprecated keys are treated:
+several ways to customise how deprecated keys are treated:
 
-- Version number can be given to indicate since when a key is deprecated
-- Version number can be given to indicate when a key is definitively removed
+- A version number can be given to indicate since when a key is deprecated
+- A version number can be given to indicate when a key is definitively removed
 - A custom message can be given to add more information about why the change happend and how to adapt
 - A custom warning type can be given to align the deprecation warnings to an existing project
 
@@ -112,7 +112,7 @@ you can provide a custom message with more information::
                 'age': 24,
             },
             dkey('name', 'last name',
-                details='`name` has been replaced by the two fields `first name` and `last name`.'))
+                details='`name` has been replaced by the two keys `first name` and `last name`.'))
 
 Which will result in the warning:
 
@@ -140,7 +140,7 @@ the warning type::
 
 Which will generate a :any:`FutureWarning`. :any:`FutureWarning` is a warning type that is shown
 to end users by default. If you want to show your own warning type, this is also possible.
-Just hand your warning type to `warning_type` instead of the string `'end user'` and it
+Just hand your warning type to ``warning_type`` instead of the string `'end user'` and it
 will be used to spawn the warning::
 
     from dkey import deprecate_keys, dkey
@@ -164,8 +164,6 @@ will be used to spawn the warning::
 
 
 Limitations
------------
+===========
 
 - No automatic doc-string adaptations are possible as of now
-
-.. automodule:: dkey
