@@ -3,6 +3,10 @@
 import warnings
 import unittest
 from contextlib import contextmanager
+import re
+from subprocess import check_output, STDOUT, CalledProcessError
+import sys
+from tempfile import NamedTemporaryFile
 
 from dkey import deprecate_keys, dkey
 
@@ -25,8 +29,15 @@ class deprecate_keys_test_case(unittest.TestCase):
             else:
                 self.assertTrue(True)
 
+    @contextmanager
+    def assertWarnsHere(self, warning):
+        with self.assertWarns(warning) as w:
+            yield
+
+        self.assertIn('test_dkey.py', w.filename)
+
     def get_key_assertions(self):
-        return ((key, self.assertWarns if self.is_deprecated(key) else self.assertNotWarns) for key in (x[0] for x in self.example_case['items']))
+        return ((key, self.assertWarnsHere if self.is_deprecated(key) else self.assertNotWarns) for key in (x[0] for x in self.example_case['items']))
 
     def is_deprecated(self, key):
         return (key == self.example_case['removed key']) or (key == self.example_case['replaced key'][0])
