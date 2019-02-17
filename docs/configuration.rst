@@ -167,5 +167,3 @@ Limitations
 -----------
 
 - No automatic doc-string adaptations are possible as of now
-
-.. automodule:: dkey
