@@ -115,7 +115,7 @@ class deprecate_keys(dict):
         return super().__ne__(other)
 
 
-    def __getitem__(self, key):
+    def __getitem__(self, key, **kwargs):
         """
         Get the value of the item of the given key `key`.
 
@@ -143,7 +143,7 @@ class deprecate_keys(dict):
             Warns with the warning stored for the given key if the key is deprecated.
 
         """
-        self._check_deprecated(key)
+        self._check_deprecated(key, additional_stacklevel=kwargs.get('stacklevel', 0))
 
         return super().__getitem__(key)
 
@@ -195,7 +195,7 @@ class deprecate_keys(dict):
             Further access to the given key will not spawn additional warnings.
 
         """
-        self.pop(key)
+        self.pop(key, stacklevel=1)
 
     def __contains__(self, key):
         """
@@ -297,11 +297,11 @@ class deprecate_keys(dict):
 
         """
         try:
-            return self.__getitem__(key)
+            return self.__getitem__(key,stacklevel=1)
         except KeyError:
             return default
 
-    def pop(self, key, default=_DEFAULT):
+    def pop(self, key, default=_DEFAULT, **kwargs):
         """
         Remove and return the item with key `key`.
 
@@ -336,7 +336,7 @@ class deprecate_keys(dict):
             information for this key is removed.
 
         """
-        if self._check_deprecated(key):
+        if self._check_deprecated(key, additional_stacklevel=kwargs.get('stacklevel', 0)):
             del self._key_mappings[key]
 
         if default is _DEFAULT:
@@ -475,7 +475,7 @@ class deprecate_keys(dict):
 
         return super().__len__()
 
-    def _check_deprecated(self, key):
+    def _check_deprecated(self, key, additional_stacklevel=0):
         """
         Check if the given key is deprecated and warn if it is.
 
@@ -487,6 +487,10 @@ class deprecate_keys(dict):
         key
             The key to look up in the dict of deprecated keys
 
+        additional_stacklevel : int, optional
+            Additional stacklevels to remove to make sure that the shown warning
+            shows the place of usage and not some internal dkey line.
+
         Returns
         -------
         deprecated : bool
@@ -495,14 +499,14 @@ class deprecate_keys(dict):
         """
         try:
             mapping = self._key_mappings[key]
-            self._warn_deprecation(mapping)
+            self._warn_deprecation(mapping, additional_stacklevel=additional_stacklevel)
 
             return True
         except KeyError:
             return False
 
     @staticmethod
-    def _warn_deprecation(mapping):
+    def _warn_deprecation(mapping, additional_stacklevel=0):
         """
         Warn with the given deprecated key mapping.
 
@@ -517,13 +521,17 @@ class deprecate_keys(dict):
             which should be a :any:`str`, and `'warning type'` which needs
             to be a valid subclass of :any:`Exception`.
 
+        additional_stacklevel : int, optional
+            Additional stacklevels to remove to make sure that the shown warning
+            shows the place of usage and not some internal dkey line.
+
         Warns
         -----
         CustomWarning
             Warns with the given message and warning type.
 
         """
-        _warn(mapping['warning message'], mapping['warning type'])
+        _warn(mapping['warning message'], mapping['warning type'], stacklevel=4+additional_stacklevel)
 
 
 def dkey(*args, deprecated_in=None, removed_in=None, details=None, warning_type='developer'):
