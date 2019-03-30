@@ -6,6 +6,12 @@ from contextlib import contextmanager
 
 from dkey import deprecate_keys, dkey
 
+class version_test_case(unittest.TestCase):
+    def test_version_string_available(self):
+        import dkey as dk
+        self.assertTrue(hasattr(dk, '__version__'))
+        self.assertTrue(hasattr(dk, 'version_info'))
+
 class dkey_test_case(unittest.TestCase):
     def test_number_of_keys_incorrect(self):
         with self.assertRaises(ValueError):
